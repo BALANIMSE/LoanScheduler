@@ -5,7 +5,7 @@
 	1. Developed spring-boot RESTful service which accept the JSON request and respond with JSON and CSV format data.
 	2. Key features of solution are 
 		a. spring-boot web application 
-		b. True REpresentations Style Transfer implementation. Where single REST API has capability to respond in JSON and CSV format.
+		b. True REpresentational  Style Transfer implementation. Where single REST API has capability to respond in JSON and CSV format.
 		c. Various design patterns and principals like singletone, factory, Front controller, Adapter and SOLID
 			
   
