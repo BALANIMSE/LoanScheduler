@@ -12,11 +12,25 @@ import com.schedule.loan.dto.LoanRepayResponseDTO;
 import com.schedule.loan.dto.LoanRepaySchedule;
 import com.schedule.loan.helper.AdapterHelper;
 
+/**
+ * The Class LoanRepayScheduleMockAdapter. This is mock Adapter which generate
+ * the Loan repayment schedule in our application it self. However, in another
+ * scenario we may get this schedule from core banking application where actual
+ * Loan processing happens, this is one of the reasons I gave the name to this
+ * class as Mock Apdater.
+ */
 @Component
 public class LoanRepayScheduleMockAdapter {
 
+	/** The loan repay response DTO. */
 	LoanRepayResponseDTO loanRepayResponseDTO = null;
 
+	/**
+	 * Calculate repay schedule.
+	 *
+	 * @param repayRequestDTO the repay request DTO
+	 * @return the loan repay response DTO
+	 */
 	public LoanRepayResponseDTO calculateRepaySchedule(LoanRepayRequestDTO repayRequestDTO) {
 
 		try {
@@ -32,11 +46,13 @@ public class LoanRepayScheduleMockAdapter {
 			Date firstInstallemntDate = repayRequestDTO.getStartDate();
 			Date nextInstallmentDate = repayRequestDTO.getStartDate();
 
+			// First installment date
 			Calendar myCal = Calendar.getInstance();
 			myCal.setTime(firstInstallemntDate);
 
 			loanRepayResponseDTO = new LoanRepayResponseDTO();
 
+			// Loop to calculate per installment details
 			do {
 
 				LoanRepaySchedule repayForMonth = new LoanRepaySchedule();
@@ -45,7 +61,12 @@ public class LoanRepayScheduleMockAdapter {
 				BigDecimal principal = monthlyInstallment.subtract(interest);
 				BigDecimal remainingOutstandingPrincipal = outstandingLoan.subtract(principal);
 
-				if (remainingOutstandingPrincipal.compareTo(new BigDecimal("0.00")) == -1) {
+				/**
+				 * Logic to handle principal, borrower pay amount and remaining outstanding
+				 * principal for last intallment
+				 */
+
+				if (repayRequestDTO.getDuration() == counter) {
 					repayForMonth.setBorrowerPaymentAmount(monthlyInstallment.add(remainingOutstandingPrincipal));
 					repayForMonth.setPrincipal(principal.add(remainingOutstandingPrincipal));
 					repayForMonth.setRemainingOutstandingPrincipal(new BigDecimal("0.00"));
@@ -55,12 +76,13 @@ public class LoanRepayScheduleMockAdapter {
 					repayForMonth.setBorrowerPaymentAmount(monthlyInstallment);
 					repayForMonth.setPrincipal(principal);
 				}
-				repayForMonth.setPrincipal(principal);
+
 				repayForMonth.setInstallmentNumber(counter);
 				repayForMonth.setInitialOutstandingPrincipal(outstandingLoan);
 				repayForMonth.setInterest(interest);
 				repayForMonth.setDate(nextInstallmentDate);
 
+				// Logic to calculate next installment date
 				myCal.setTime(firstInstallemntDate);
 				myCal.add(Calendar.MONTH, counter);
 				nextInstallmentDate = myCal.getTime();

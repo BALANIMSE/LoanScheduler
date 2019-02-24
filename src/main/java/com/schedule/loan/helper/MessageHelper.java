@@ -1,3 +1,4 @@
+
 package com.schedule.loan.helper;
 
 import java.io.IOException;
@@ -6,10 +7,21 @@ import java.util.Properties;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
+/**
+ * The Class MessageHelper. This class loads all the message.properties being
+ * used by application.
+ */
 public class MessageHelper {
 
+	/** The prop. */
 	private static Properties prop = null;
 
+	/**
+	 * Gets the message.
+	 *
+	 * @param key the key
+	 * @return the message
+	 */
 	public static String getMessage(String key) {
 
 		String value = "";
@@ -25,6 +37,9 @@ public class MessageHelper {
 		return value;
 	}
 
+	/**
+	 * Inits the properties.
+	 */
 	private static void initProperties() {
 
 		prop = new Properties();

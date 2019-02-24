@@ -12,12 +12,25 @@ import com.schedule.loan.dto.Message;
 import com.schedule.loan.enumerations.Status;
 import com.schedule.loan.helper.MessageHelper;
 
+/**
+ * The Class LoanRepayService. This is core business logic class, where business
+ * validation of request payload happens. Basis on successful validation this
+ * service makes call to Adapter to perform the terminal operation for this API.
+ */
+
 @Service
 public class LoanRepayService {
 
+	/** The repay adapter. */
 	@Autowired
 	private LoanRepayScheduleMockAdapter repayAdapter = null;
 
+	/**
+	 * Generate repay schedule.
+	 *
+	 * @param repayRequestDTO the repay request DTO
+	 * @return the loan repay response DTO
+	 */
 	public LoanRepayResponseDTO generateRepaySchedule(LoanRepayRequestDTO repayRequestDTO) {
 
 		LoanRepayResponseDTO repayResponse = null;
@@ -35,6 +48,12 @@ public class LoanRepayService {
 		return repayResponse;
 	}
 
+	/**
+	 * Validate generate repay schedule.
+	 *
+	 * @param repayRequestDTO the repay request DTO
+	 * @return the loan repay response DTO
+	 */
 	private LoanRepayResponseDTO validateGenerateRepaySchedule(LoanRepayRequestDTO repayRequestDTO) {
 
 		LoanRepayResponseDTO response = null;
@@ -76,11 +95,16 @@ public class LoanRepayService {
 		return response;
 	}
 
+	/**
+	 * Validate positive amount.
+	 *
+	 * @param amount the amount
+	 * @return true, if successful
+	 */
 	private boolean validatePositiveAmount(BigDecimal amount) {
 		boolean flag = false;
 
-		if (amount != null
-				&& (amount.compareTo(new BigDecimal("0.00")) == -1 || amount.compareTo(new BigDecimal("0.00")) == 0))
+		if (amount != null && (amount.compareTo(new BigDecimal("0.00")) <= 0))
 			flag = true;
 
 		return flag;

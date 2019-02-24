@@ -8,9 +8,19 @@ import org.springframework.stereotype.Component;
 
 import com.schedule.loan.dto.LoanRepayRequestDTO;
 
+/**
+ * The Class AdapterHelper. It is kind of utility class to calculate monthly
+ * annuity and interest for a month
+ */
 @Component
 public class AdapterHelper {
 
+	/**
+	 * Monthly repayment calc.
+	 *
+	 * @param repayRequestDTO the repay request DTO
+	 * @return the big decimal
+	 */
 	public BigDecimal monthlyRepaymentCalc(LoanRepayRequestDTO repayRequestDTO) {
 
 		int repaymentsPerYear = 12;
@@ -32,6 +42,13 @@ public class AdapterHelper {
 
 	}
 
+	/**
+	 * Interest for month.
+	 *
+	 * @param nominalRate the nominal rate
+	 * @param principal   the principal
+	 * @return the big decimal
+	 */
 	public BigDecimal interestForMonth(BigDecimal nominalRate, BigDecimal principal) {
 
 		BigDecimal interestRate = nominalRate.divide(new BigDecimal("100.00"), MathContext.DECIMAL128);

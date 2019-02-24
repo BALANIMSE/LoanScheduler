@@ -15,8 +15,23 @@ import com.schedule.loan.dto.BaseDTO;
 import com.schedule.loan.dto.LoanRepayResponseDTO;
 import com.schedule.loan.dto.LoanRepaySchedule;
 
+/**
+ * The Class CSVContentPublisher extends abstract class Content publisher. This
+ * class is going to be generic for all response DTOs to have CSV download
+ * option basis on Query parameter passed in RESTful service request. This is
+ * framework class. However, current due to time constraint I have inlined the
+ * implementation of Repay Schedule download
+ * 
+ */
 public class CSVContentPublisher extends AbstractContentPublisher<BaseDTO> {
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.schedule.loan.content.AbstractContentPublisher#publish(com.schedule.loan.
+	 * dto.BaseDTO, java.lang.String)
+	 */
 	@Override
 	public ResponseEntity<Object> publish(BaseDTO entity, String mediaType) throws Exception {
 
